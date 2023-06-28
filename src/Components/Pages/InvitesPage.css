@@ -1,0 +1,65 @@
+.paddingBadge {
+  margin-right: .5rem;
+  margin-left: .5rem;
+ }
+
+ .paddingReqBadge{
+  margin-left: .5rem;
+  padding-bottom: .1rem;
+ }
+
+ 
+ .indent{
+   margin-left: .5rem;
+ }
+
+ .indentMembers{
+  margin-left: 1rem;
+}
+
+ .cardTitle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+
+ .requestbtn{
+  padding-top:.2rem;
+  padding-right:.4rem;
+  padding-left: .6rem;
+  padding-bottom: .1rem;
+  font-size: large;
+ }
+
+ .textsmaller{
+  font-size: medium;
+  text-align: right;
+ }
+
+ .sendReqTrial{
+  display:flex;
+  align-items: center;
+ }
+ 
+ 
+ div {
+   word-wrap: break-word;
+ }
+ 
+ 
+ .positionButton {
+   display: flex;
+   margin-top: 3rem;
+ }
+ 
+ .id-line{
+   display:flex;
+   flex-wrap: wrap;
+   word-wrap: break-word;
+   word-break: break-all;
+ }
+ 
+ p {
+   word-wrap: break-word;
+ }
+ 
