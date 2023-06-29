@@ -1033,14 +1033,14 @@ class App extends React.Component {
             this.state.stagedAcceptedInvites.slice(0,-1),
             dgtAcceptedInvites: this.state.dgtAcceptedInvites.slice(1),
             isLoadingRefresh: false,
-            errorToDisplay: 'Insufficient Credits'
+            errorToDisplay: true
           });
         })
         .finally(() => client.disconnect());
     } // This is the close of the else statment
 
     //###################################
-    setTimeout(this.addGroup(newGroup),1000); // <- This where set isLoadingRefresh: false
+    this.addGroup(newGroup); // <- This where set isLoadingRefresh: false
     //##################################
   };
 
@@ -1077,7 +1077,6 @@ class App extends React.Component {
     this.setState({
       dgtAcceptedInvites: [group, ...this.state.dgtAcceptedInvites],
       stagedAcceptedInvites: [group, ...this.state.stagedAcceptedInvites],
-      isLoadingRefresh: false,
     });
 
     //ALSO RECALL THE IDENTITY SO THAT IT WILL UPDATE THE cREDITS QUANTS
@@ -1205,19 +1204,6 @@ class App extends React.Component {
           </>
         ) : this.state.isGroupShowing ? (
           <>
-              {this.state.errorToDisplay ? (
-              <>
-                <p></p>
-                <Alert variant="danger" dismissible>
-                  <Alert.Heading>Invite Failed</Alert.Heading>
-                  <p>
-                    You either have insufficient credits or have run into a platform error. Please TopUp credits on DashGetNames or DashGetPaid. Currently, this dapp is platform only so it does not include full wallet access to enable TopUp, but it is planned for future upgrade.
-                  </p>
-                </Alert>
-              </>
-            ) : (
-              <></>
-            )}
 
             <GroupPage
               uniqueName={this.state.uniqueName}
@@ -1241,6 +1227,19 @@ class App extends React.Component {
           </>
         ) : (
           <>
+          {this.state.errorToDisplay ? (
+              <>
+                <p></p>
+                <Alert variant="danger" dismissible>
+                  <Alert.Heading>Invite Failed</Alert.Heading>
+                  <p>
+                    You either have insufficient credits or have run into a platform error. Please TopUp credits on DashGetNames or DashGetPaid. Currently, this dapp is platform only so it does not include full wallet access to enable TopUp, but it is planned for future upgrade.
+                  </p>
+                </Alert>
+              </>
+            ) : (
+              <></>
+            )}
             <InvitesPage
               isLoading={this.state.isLoading}
               isLoadingRefresh={this.state.isLoadingRefresh}

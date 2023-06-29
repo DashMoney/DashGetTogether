@@ -109,7 +109,21 @@ class GroupPage extends React.Component {
         identity,
         docProperties,
       );
-    
+//Staged BEGIN
+      let d = Date.now();
+
+      let fakeDocProperties = {
+        group: groupName,
+        timeStamp: 2546075019551 - d ,
+        message: msgText,
+        $createdAt: d,
+      };
+
+      console.log(fakeDocProperties);
+
+      this.addSentMessage(fakeDocProperties);
+//Staged END
+
       const documentBatch = {
         create: [dgtDocument], // Document(s) to create
         replace: [], // Document(s) to update
@@ -135,24 +149,12 @@ class GroupPage extends React.Component {
           stageMsgsToAdd:this.state.stageMsgsToAdd.slice(0,-1),
           msgsToDisplay: 
             this.state.msgsToDisplay.slice(1),
-          Loading:false,
+          LoadingMsg:false,
           sentMsgError: true, 
         });
     })
       .finally(() => client.disconnect());
 
-      let d = Date.now();
-
-      let fakeDocProperties = {
-        group: groupName,
-        timeStamp: 2546075019551 - d ,
-        message: msgText,
-        $createdAt: d,
-      };
-
-      console.log(fakeDocProperties);
-
-      setTimeout(this.addSentMessage(fakeDocProperties), 1000);
   
   }
 
@@ -165,7 +167,6 @@ class GroupPage extends React.Component {
      this.props.handleStagedMsgs(tupleToAdd);
 
     this.setState({
-      LoadingMsg:false,
       stageMsgsToAdd:[tupleToAdd, 
         ...this.state.stageMsgsToAdd],
       msgsToDisplay:[tupleToAdd, 
