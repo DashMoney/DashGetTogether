@@ -46,7 +46,7 @@ class App extends React.Component {
       //isLoadingRecentTab: false,
       isLoadingOthersInvites: true,
       isLoadingGroup: false,
-      errorToDisplay: '',
+      errorToDisplay: false,
 
       mode: "dark",
       presentModal: "",
@@ -1006,9 +1006,6 @@ class App extends React.Component {
           docProperties
         );
 
-//###################################
-      this.addGroup(newGroup); // <- This where set isLoadingRefresh: false
-//##################################
 
         const documentBatch = {
           create: [dgtDocument], // Document(s) to create
@@ -1041,6 +1038,10 @@ class App extends React.Component {
         })
         .finally(() => client.disconnect());
     } // This is the close of the else statment
+
+    //###################################
+    setTimeout(this.addGroup(newGroup),1000); // <- This where set isLoadingRefresh: false
+    //##################################
   };
 
   addGroup = (groupName) => { //just a name
@@ -1204,7 +1205,7 @@ class App extends React.Component {
           </>
         ) : this.state.isGroupShowing ? (
           <>
-              {this.state.errorToDisplay === 'Insufficient Credits' ? (
+              {this.state.errorToDisplay ? (
               <>
                 <p></p>
                 <Alert variant="danger" dismissible>

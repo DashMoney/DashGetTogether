@@ -130,6 +130,7 @@ class GroupPage extends React.Component {
       })
       .catch((e) => {
         console.error('Something went wrong:\n', e);
+        this.props.handleRemoveStagedMsgs();
         this.setState({
           stageMsgsToAdd:this.state.stageMsgsToAdd.slice(0,-1),
           msgsToDisplay: 
@@ -151,7 +152,7 @@ class GroupPage extends React.Component {
 
       console.log(fakeDocProperties);
 
-      this.addSentMessage(fakeDocProperties);
+      setTimeout(this.addSentMessage(fakeDocProperties), 1000);
   
   }
 
