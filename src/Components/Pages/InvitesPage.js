@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 
 import "./InvitesPage.css";
 
-
 class InvitesPage extends React.Component {
   handleTimeToDate = (timeObject) => {
     let date = new Date(timeObject);
@@ -18,13 +17,11 @@ class InvitesPage extends React.Component {
 
   handleJoinGroup = (groupName) => {
     this.props.handleSelectedJoinGroup(groupName);
-  }
-
+  };
 
   render() {
     let acceptedInvitesButtons = <></>;
     let othersInvitesButtons = <></>;
-
 
     acceptedInvitesButtons = this.props.dgtAcceptedInvites.map(
       (acceptedGroup, index) => {
@@ -43,66 +40,75 @@ class InvitesPage extends React.Component {
       }
     );
 
-
     othersInvitesButtons = this.props.othersInvitesToDisplay.map(
       (othersInvite, index) => {
         return (
           <Button
             key={index}
             variant="primary"
-             onClick={() => this.handleJoinGroup(othersInvite[1].group)}
+            onClick={() => this.handleJoinGroup(othersInvite[1].group)}
           >
             {othersInvite[1].group}
             <Badge className="createwalletbtn" bg="light" text="dark" pill>
               {othersInvite[0]}
             </Badge>
-
-           
           </Button>
         );
       }
     );
 
-
     return (
       <>
-      <p></p>
-       <div className="id-line">
-        <h5>{this.props.identityInfo === '' || this.props.identityInfo.balance >= 200000000 ?
-        <Badge className="paddingBadge" bg="primary">
-        Your Platform Credits
-      </Badge>
-        :
-        <Badge className="paddingBadge" bg="danger">
-            Your Platform Credits
-          </Badge>
-          }
-          
-        </h5>
-{this.props.identityInfo === '' ?
-         <h5>
-         <Badge className="paddingBadge" bg="primary" pill>
-           Loading..
-         </Badge>
-       </h5> 
-        :
-        <>
-        { this.props.identityInfo.balance >= 200000000 ?
-        <h5>
-        <Badge className="paddingBadge" bg="primary" pill>
-          {this.props.identityInfo.balance}
-        </Badge>
-      </h5>:<h5>
-          <Badge className="paddingBadge" bg="danger" pill>
-            {this.props.identityInfo.balance}
-          </Badge>
-        </h5>
-        }
-        </>     
-        }
+        <p></p>
+        <div className="id-line">
+          <h5>
+            {this.props.identityInfo === "" ||
+            this.props.identityInfo.balance >= 450000000 ? (
+              <Badge className="paddingBadge" bg="primary">
+                Your Platform Credits
+              </Badge>
+            ) : (
+              <Badge className="paddingBadge" bg="danger">
+                Platform Credits : Low!
+              </Badge>
+            )}
+          </h5>
+          {this.props.identityInfo === "" ? (
+            <h5>
+              <Badge className="paddingBadge" bg="primary" pill>
+                Loading..
+              </Badge>
+            </h5>
+          ) : (
+            <>
+              {this.props.identityInfo.balance >= 450000000 ? (
+                <h5>
+                  <Badge className="paddingBadge" bg="primary" pill>
+                    {this.props.identityInfo.balance}
+                  </Badge>
+                </h5>
+              ) : (
+                <h5>
+                  <Badge className="paddingBadge" bg="danger" pill>
+                    {this.props.identityInfo.balance}
+                  </Badge>
+                </h5>
+              )}
+            </>
+          )}
 
-        
-     </div>
+          <h5>
+            {this.props.identityInfo === "" ||
+            this.props.identityInfo.balance >= 450000000 ? (
+              <></>
+            ) : (
+              <Badge className="paddingBadge" bg="primary">
+                Please visit DGN or DGM to TopUp your credits.
+              </Badge>
+            )}
+          </h5>
+          
+        </div>
         <div id="bodytext">
           {this.props.isLoading ? (
             <>
@@ -117,11 +123,10 @@ class InvitesPage extends React.Component {
             <></>
           )}
 
-          
           {this.props.identity !== "Retrieving Identity" &&
           this.props.identity !== "No Identity" &&
           this.props.uniqueName !== "Er" &&
-          !this.props.isLoading  ? (
+          !this.props.isLoading ? (
             <>
               <h3>Your Groups</h3>
             </>
@@ -131,7 +136,6 @@ class InvitesPage extends React.Component {
 
           {!this.props.isLoading && this.props.isLoadingRefresh ? (
             <>
-              
               <p></p>
               <div id="spinner">
                 <Spinner animation="border" role="status">
@@ -147,12 +151,12 @@ class InvitesPage extends React.Component {
           this.props.identity !== "No Identity" &&
           this.props.uniqueName !== "Er" &&
           !this.props.isLoading &&
-          !this.props.isLoadingRefresh && 
-          this.props.dgtAcceptedInvites.length === 0 ? 
-          <>
-          (Groups, you have joined or created will appear here!)
-          </>:
-          <></>}
+          !this.props.isLoadingRefresh &&
+          this.props.dgtAcceptedInvites.length === 0 ? (
+            <>(Groups, you have joined or created will appear here!)</>
+          ) : (
+            <></>
+          )}
 
           {this.props.identity !== "Retrieving Identity" &&
           this.props.identity !== "No Identity" &&
@@ -160,22 +164,22 @@ class InvitesPage extends React.Component {
           !this.props.isLoading &&
           !this.props.isLoadingRefresh ? (
             <>
-            <div className="d-grid gap-2">{acceptedInvitesButtons}</div>
-            <p></p>
+              <div className="d-grid gap-2">{acceptedInvitesButtons}</div>
+              <p></p>
               <h3>Your Invites</h3>
 
               {!this.props.isLoading && this.props.isLoadingOthersInvites ? (
-            <>
-              <p></p>
-              <div id="spinner">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </Spinner>
-              </div>
-            </>
-          ) : (
-            <></>
-          )}
+                <>
+                  <p></p>
+                  <div id="spinner">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
 
               <div className="d-grid gap-2">{othersInvitesButtons}</div>
             </>
@@ -183,18 +187,16 @@ class InvitesPage extends React.Component {
             <></>
           )}
 
-{this.props.identity !== "Retrieving Identity" &&
+          {this.props.identity !== "Retrieving Identity" &&
           this.props.identity !== "No Identity" &&
           this.props.uniqueName !== "Er" &&
           !this.props.isLoading &&
-          !this.props.isLoadingRefresh && 
-          this.props.othersInvitesToDisplay.length === 0 ? 
-          <>
-          (Invites sent to you will appear here!)
-          </>:
-          <></>}
-          
-
+          !this.props.isLoadingRefresh &&
+          this.props.othersInvitesToDisplay.length === 0 ? (
+            <>(Invites sent to you will appear here!)</>
+          ) : (
+            <></>
+          )}
         </div>
 
         {this.props.identity === "No Identity" ? (

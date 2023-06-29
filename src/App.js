@@ -1,6 +1,8 @@
 import React from "react";
 import LocalForage from "localforage";
 
+import Alert from "react-bootstrap/Alert";
+
 import Image from "react-bootstrap/Image";
 
 import DashBkgd from "./Images/dash_digital-cash_logo_2018_rgb_for_screens.png";
@@ -44,6 +46,7 @@ class App extends React.Component {
       //isLoadingRecentTab: false,
       isLoadingOthersInvites: true,
       isLoadingGroup: false,
+      errorToDisplay: '',
 
       mode: "dark",
       presentModal: "",
@@ -1003,6 +1006,10 @@ class App extends React.Component {
           docProperties
         );
 
+//###################################
+      this.addGroup(newGroup); // <- This where set isLoadingRefresh: false
+//##################################
+
         const documentBatch = {
           create: [dgtDocument], // Document(s) to create
           replace: [], // Document(s) to update
@@ -1011,10 +1018,6 @@ class App extends React.Component {
         // Sign and submit the document(s)
         return platform.documents.broadcast(documentBatch, identity);
       };
-
-//############################################################
-      this.addGroup(newGroup); // <- This where set isLoadingRefresh: false
-//############################################################
 
       submitInvite()
         .then((d) => {
@@ -1029,8 +1032,11 @@ class App extends React.Component {
         })
         .catch((e) => {
           console.error("Something went wrong:\n", e);
-          this.setState({
+          this.setState({stagedAcceptedInvites: 
+            this.state.stagedAcceptedInvites.slice(0,-1),
+            dgtAcceptedInvites: this.state.dgtAcceptedInvites.slice(1),
             isLoadingRefresh: false,
+            errorToDisplay: 'Insufficient Credits'
           });
         })
         .finally(() => client.disconnect());
@@ -1198,6 +1204,20 @@ class App extends React.Component {
           </>
         ) : this.state.isGroupShowing ? (
           <>
+              {this.state.errorToDisplay === 'Insufficient Credits' ? (
+              <>
+                <p></p>
+                <Alert variant="danger" dismissible>
+                  <Alert.Heading>Invite Failed</Alert.Heading>
+                  <p>
+                    You either have insufficient credits or have run into a platform error. Please TopUp credits on DashGetNames or DashGetPaid. Currently, this dapp is platform only so it does not include full wallet access to enable TopUp, but it is planned for future upgrade.
+                  </p>
+                </Alert>
+              </>
+            ) : (
+              <></>
+            )}
+
             <GroupPage
               uniqueName={this.state.uniqueName}
               identityRaw={this.state.identityRaw}

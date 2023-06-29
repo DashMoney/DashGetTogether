@@ -131,6 +131,9 @@ class GroupPage extends React.Component {
       .catch((e) => {
         console.error('Something went wrong:\n', e);
         this.setState({
+          stageMsgsToAdd:this.state.stageMsgsToAdd.slice(0,-1),
+          msgsToDisplay: 
+            this.state.msgsToDisplay.slice(1),
           Loading:false,
           sentMsgError: true, 
         });
